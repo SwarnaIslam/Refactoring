@@ -56,19 +56,34 @@ Also duplicate code occurred in roll(), wasCorrectlyAnswered() which have been e
 ## Long Method
 #### Remedies:
 **Extract method:**
-TO reduce method length because of duplications, method extract is used.
+TO reduce method length because of duplications, method extract is used. 
 **Decompose conditional:**
-Extracted method from the condion in roll()
+To reduce conditional complexity, I have extracted method from the condion in roll() 
 ```
-if(shouldGetOutOfPenaltyBox()){
-    isGettingOutOfPenaltyBox = true;
-    Utility.announce(players.get(currentPlayer) + " is getting out of the penalty box");
+public void roll(){
+  .....
+  if(shouldGetOutOfPenaltyBox()){
+      isGettingOutOfPenaltyBox = true;
+      Utility.announce(players.get(currentPlayer) + " is getting out of the penalty box");
 
-    completeRoll();
+      completeRoll();
+  }
+  .....
 }
 private boolean shouldGetOutOfPenaltyBox(){
     return players.get(currentPlayer).getPlayerRoll()%2!=0;
 }
 ```
-
+```
+private void completeRoll(){
+  .....
+  if(config.placeOutOfBoard(players.get(currentPlayer))){
+      config.adjustPlace(players.get(currentPlayer));
+  }
+  .....
+}
+public boolean outOfBoard(Player player){
+    return player.place+player.getPlayerRoll()> GAME_BOARD_SPACE -1;
+}
+```
 
