@@ -56,7 +56,7 @@ Also duplicate code occurred in roll(), wasCorrectlyAnswered() which have been e
 ## Long Method
 #### Remedies:
 **Extract method:**
-TO reduce method length because of duplications, method extract is used. 
+To reduce method length because of duplications, method extraction is used. 
 **Decompose conditional:**
 To reduce conditional complexity, I have extracted method from the condion in roll() 
 ```
