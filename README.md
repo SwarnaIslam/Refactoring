@@ -86,4 +86,8 @@ public boolean outOfBoard(Player player){
     return player.place+player.getPlayerRoll()> GAME_BOARD_SPACE -1;
 }
 ```
-
+## Inappropriate Naming
+add() method's purpose is not clear. What is it adding? Actually add() method is used to add players in the game.
+#### Remedies
+**Giving meaningful name:**
+A method name should say exactly what it does. add() method is renamed addPlayer().
