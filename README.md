@@ -88,6 +88,68 @@ public boolean outOfBoard(Player player){
 ```
 ## Inappropriate Naming
 add() method's purpose is not clear. What is it adding? Actually add() method is used to add players in the game.
-#### Remedies
+#### Remedies:
 **Giving meaningful name:**
 A method name should say exactly what it does. add() method is renamed addPlayer().
+
+# PlaintextToHtmlConverter class refactoring
+## Inappropriate Naming
+field name source is misleading. It is actually containing content of the text file. But source can also mean a file's source.
+#### Remedies:
+**Giving meaningful name:**
+source is replaced by the name text. addNewLine() is also misleading as it is not clear what is being added as new line. So it is renamed as addAnNewHtmlLine.
+## Primitive Obsession
+Simple while loop is used to read character of string. 
+#### Remedies:
+**Use of enhanced for loop:**
+It allows iterating over an array or other type of collection, and access each element of the collection in turn, without having to use an index variable. 
+```
+for (char character: this.text.toCharArray() ){
+    ......
+}
+```
+## Switch Statement
+Duplicated use of switch statement.
+#### Remedies:
+**Use of Map:**
+Encoded HTMl value is mapped with corresponding plaintext character.
+```
+htmlEscape.put("<","&lt");
+htmlEscape.put(">","&gt");
+htmlEscape.put("&","&amp");
+```
+## Long method
+basicHtmlEncode() method is too hard to quickly comprehend. 
+#### Remedies:
+**Method extraction:**
+Returning final result is done by calling getFinalResult() method.
+**Using enhanced for loop:**
+Unnecessary variable and method using is reduced.
+
+## Black sheep
+File reading should not be a responsibility of PlaintextToHtmlConverter class.
+#### Remedies:
+readTextFile() file is moved to a newly created class HtmlUtil. 
+## Comments
+Comments were used before addNewLine() as it was not self-describing.
+#### Remedies:
+As the newly renamed method addAnNewHtmlLine() is able to describe itself, comments were removed.
+
+# FizzBuzz class refactoring
+## conditional complexity
+It is not clear why strReturn should be set to different value based on condition.
+#### Remedies:
+**Method extraction:**
+Methods with meaningful name will be able reduce confusion to understand conditions.
+```
+private static boolean isFizz(int currentNumber){
+    return currentNumber%3==0;
+}
+private static boolean isBuzz(int currentNumber){
+    return currentNumber%5==0;
+}
+private static boolean isFizzBuzz(int currentNumber){
+    return currentNumber%15==0;
+}
+```
+    
