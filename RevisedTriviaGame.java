@@ -12,7 +12,7 @@ class GameConfig{
     public void adjustPlace(Player player){
         player.place+=player.getPlayerRoll()- GAME_BOARD_SPACE;
     }
-    public boolean outOfBoard(Player player){
+    public boolean placeOutOfBoard(Player player){
         return player.place+player.getPlayerRoll()> GAME_BOARD_SPACE -1;
     }
 }
@@ -59,9 +59,12 @@ public class RevisedTriviaGame{
             completeRoll();
         }
     }
+    private boolean shouldGetOutOfPenaltyBox(){
+        return players.get(currentPlayer).getPlayerRoll()%2!=0;
+    }
     private void completeRoll(){
 
-        if(config.outOfBoard(players.get(currentPlayer))){
+        if(config.placeOutOfBoard(players.get(currentPlayer))){
             config.adjustPlace(players.get(currentPlayer));
         }
         Utility.announce(players.get(currentPlayer).getName()
@@ -101,9 +104,6 @@ public class RevisedTriviaGame{
         return !(players.get(currentPlayer).purse== config.COIN_NEEDED_TO_WIN);
     }
 
-    private boolean shouldGetOutOfPenaltyBox(){
-        return players.get(currentPlayer).getPlayerRoll()%2!=0;
-    }
     private void nextPlayer(){
         currentPlayer++;
         if(currentPlayer==players.size())currentPlayer=0;
@@ -160,7 +160,7 @@ class Question{
         this.currentCategory().ask();
     }
     public String getCategoryName(){
-        return currentCategory().getCategoryName();
+        return currentCategory().categoryName;
     }
 }
 
@@ -204,10 +204,7 @@ class Category{
 
     public void addQuestion() {
         int newIndex= categorizedQuestion.size();
-        categorizedQuestion.addLast("Pop Question "+newIndex);
+        categorizedQuestion.addLast(this.categoryName+" Question "+newIndex);
     }
 
-    public String getCategoryName() {
-        return this.categoryName;
-    }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 class HtmlUtil{
-    Map<String, String> htmlEscape =new HashMap<>();
+    public Map<String, String> htmlEscape =new HashMap<>();
     public HtmlUtil(){
         htmlEscape.put("<","&lt");
         htmlEscape.put(">","&gt");
@@ -17,6 +17,9 @@ class HtmlUtil{
     }
     protected String readTextFile() throws IOException {
         return new String(Files.readAllBytes(Paths.get("sample.txt")));
+    }
+    public boolean isEndOfLine(String characterToConvert){
+        return characterToConvert=="\n";
     }
 }
 public class RevisedHTML {
@@ -44,8 +47,8 @@ public class RevisedHTML {
     private String basicHtmlEncode() {
         for (char character: this.text.toCharArray() ){
             String characterToConvert=String.valueOf(character);
-            if(isEndOfLine(characterToConvert)){
-                addAsNewHtmlLine();
+            if(util.isEndOfLine(characterToConvert)){
+                addAnNewHtmlLine();
             }
             else if(util.htmlEscape.containsKey(characterToConvert)){
                 convertedLine.add(util.htmlEscape.get(characterToConvert));
@@ -56,17 +59,12 @@ public class RevisedHTML {
         }
         return getFinalResult();
     }
-    private boolean isEndOfLine(String characterToConvert){
-        return characterToConvert=="\n";
-    }
     private String getFinalResult(){
-        addAsNewHtmlLine();
-        String finalResult = String.join("<br />", result);
-        return finalResult;
+        addAnNewHtmlLine();
+        return String.join("<br />", result);
     }
-    //stringfy convertedLine array and push into result
-    //reset convertedLine
-    private void addAsNewHtmlLine() {
+
+    private void addAnNewHtmlLine() {
         String line = String.join("", convertedLine);
         result.add(line);
         convertedLine.clear();
